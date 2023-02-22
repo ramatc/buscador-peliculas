@@ -12,10 +12,10 @@ type Movies = {
 
 function ListOfMovies ({ movies }: Movies) {
   return (
-    <ul>
+    <ul className='movies'>
         {
             movies.map((movie: Movie) => (
-                <li key={movie.id}>
+                <li className='movie' key={movie.id}>
                     <h3>{movie.title}</h3>
                     <p>{movie.year}</p>
                     <img src={movie.poster} alt={movie.title}/>
