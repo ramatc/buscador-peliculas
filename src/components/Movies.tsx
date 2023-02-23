@@ -1,16 +1,10 @@
-type Movie = {
-    id: string;
-    title: string;
-    year: string;
-    poster: string;
-    type: string;
-}
+import { Movie } from '../interfaces/interfaces';
 
-type Movies = {
+interface props {
     movies: Array<Movie>;
 }
 
-function ListOfMovies ({ movies }: Movies) {
+function ListOfMovies ({ movies }: props) {
   return (
     <ul className='movies'>
         {
@@ -32,7 +26,7 @@ function NoMovieResults () {
     )
 }
 
-export function Movies ({ movies }: Movies) {
+export function Movies ({ movies }: props) {
     const hasMovies = movies?.length > 0;
 
     return (

@@ -3,10 +3,10 @@ import { useMovies } from './hooks/useMovies';
 import { useSearch } from './hooks/useSearch';
 
 const App = () => {
-
-    const { movies } = useMovies();
+    
     const { search, setSearch, error } = useSearch();
-
+    const { movies, loading, getMovies } = useMovies(search);
+    
     // FORMA DESCONTROLADA
     // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     //     e.preventDefault();
@@ -38,7 +38,7 @@ const App = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log({ search });
+        getMovies();
     }
 
     //FORMA CONTROLADA 2
@@ -67,7 +67,9 @@ const App = () => {
             </header>
 
             <main>
-                <Movies movies={movies}/>
+                {
+                    loading ? <p>Cargando...</p> : <Movies movies={movies}/>
+                }
             </main>
         </div>
     )
