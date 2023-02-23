@@ -4,7 +4,7 @@ export function useSearch () {
     const [search, setSearch] = useState<string>('');
     const [error, setError] = useState<string | null>(null);
     const isFirstInput = useRef(true);
-
+    
     useEffect(() => {
         if(isFirstInput.current){
             isFirstInput.current = search === '';
