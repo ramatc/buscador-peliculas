@@ -8,7 +8,7 @@ const App = () => {
     const [sort, setSort] = useState<boolean>(false);
     const { search, setSearch, error } = useSearch();
     const { movies, loading, getMovies } = useMovies(search, sort);
-    
+
     const debouncedGetMovies = useCallback(
         debounce((search: string) => {
             getMovies(search);
@@ -17,16 +17,14 @@ const App = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
         getMovies(search);
     }
 
-    const handleSort = () => {
-        setSort(!sort)
-    }
-    
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newSearch = e.target.value;
         setSearch(newSearch);
+        setSort(false);
 
         debouncedGetMovies(newSearch);
     }
@@ -34,7 +32,7 @@ const App = () => {
     return (
         <div className='page'>
             <header>
-                <h1>Buscador de películas</h1>
+                <h1>Buscador de películas:</h1>
                 <form onSubmit={handleSubmit}>
                     <input 
                         type='text'
@@ -46,8 +44,9 @@ const App = () => {
                     />
                     <input
                         type='checkbox'
-                        onChange={handleSort}
+                        onChange={() => setSort(!sort)}
                         checked={sort}
+                        disabled={movies === null || movies === undefined}
                     />
                     <button type='submit'>Buscar</button>
                 </form>

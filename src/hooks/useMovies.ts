@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useCallback } from 'react';
+import { useState, useRef, useEffect, useMemo, useCallback } from 'react';
 import { searchMovies } from '../services/movies';
 import { Movie } from '../interfaces/interfaces';
 
@@ -8,6 +8,10 @@ export function useMovies (search: string, sort: boolean) {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<unknown>(null);
     const previousSearch = useRef(search);
+
+    useEffect(() => {
+        getMovies('Avengers');
+    }, [])
 
     const getMovies = useCallback(async (search: string) => {
         if (search === previousSearch.current) return;
@@ -27,8 +31,8 @@ export function useMovies (search: string, sort: boolean) {
 
     const sortedMovies = useMemo(() => {
         return sort
-        ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
-        : movies;
+            ? [...movies].sort((a, b) => a.title.localeCompare(b.title))
+            : movies;
     }, [sort, movies]);
 
     return { movies: sortedMovies, loading, error, getMovies }
